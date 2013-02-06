@@ -1,0 +1,27 @@
+Simple Image Share
+------------------
+This application is a single PHP script designed to drop into any web directory
+and allow image uploading and sharing.
+
+You can upload individual image files or .zip files containing any number of
+images and directories. All images found in the .zip will be uploaded.
+
+Dependencies
+------------
+* Mogrify executable. e.g. /usr/bin/mogrify
+* Web server with PHP support.
+
+INSTALL
+-------
+Edit the $mogrify variable in the configuration section.
+
+Put the index.php script in a web accessible directory.
+
+All images uploaded will be stored in images/photos in the same directory as
+index.php.
+
+TODO
+----
+* We still need to clean up the temporary .zip directories.
+* Pagination.
+* Delete images.
