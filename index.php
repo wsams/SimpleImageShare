@@ -163,7 +163,8 @@ if (is_array($imgs) && count($imgs) > 0) {
         $h = $size[1];
         $newh = $maxh;
         $neww = floor(($maxh * $w) / $h);
-        $imghtml .= "<div class=\"imgcont\"><a target=\"_blank\" href=\"{$imgdir}/small_{$realimg}\"{$lightbox}><img class=\"lazy\" src=\"images/white.png\" data-original=\"{$imgdir}/{$v}\" alt=\"{$imgdir}/{$v}\" width=\"{$neww}\" height=\"{$newh}\" /></a></div> ";
+        $link = "<span class=\"imgmsg\"><a target=\"_blank\" href=\"{$imgdir}/{$realimg}\">&#x21d3;</a></span>";
+        $imghtml .= "<div class=\"imgcont\"><a target=\"_blank\" href=\"{$imgdir}/small_{$realimg}\"{$lightbox}><img class=\"lazy\" src=\"images/white.png\" data-original=\"{$imgdir}/{$v}\" alt=\"{$imgdir}/{$v}\" width=\"{$neww}\" height=\"{$newh}\" /></a>{$link}</div> ";
     }
 }
 
@@ -195,10 +196,22 @@ $html = <<<eof
                 padding:16px;
             }
 
+            .imgcont {
+            }
+
             .imgcont a {
                 float:left;
                 margin-right:4px;
-                display:relative;
+            }
+
+            .imgmsg a {
+                background-color:#dfdfdf;
+                color:white;
+                padding:2px;
+            }
+
+            .imgmsg a:hover {
+                background-color:black;
             }
 
             .fade-in {
