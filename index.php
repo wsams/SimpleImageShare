@@ -62,7 +62,9 @@ if (!is_executable($mogrify)) {
 
 function mogrify($img, $size, $quality) {
     exec("{$GLOBALS['mogrify']} -resize {$size}x{$size} \"$img\"");
-    exec("{$GLOBALS['mogrify']} -quality $quality \"$img\"");
+    if (intval($quality) > 0 && intval($quality) < 100) {
+        exec("{$GLOBALS['mogrify']} -quality $quality \"$img\"");
+    }
 }
 
 function getmicrotime() {
@@ -124,18 +126,23 @@ if ($_GET['action'] == "upload") {
                     $oldfilepath = trim($img);
                     $newfilepath = trim($imgdir . "/" . $newfile);
                     $newfilepaththumb = trim($imgdir . "/thumb_" . $newfile);
+                    $newfilepathsmall = trim($imgdir . "/small_" . $newfile);
+
                     copy($tmpzipdir . "/" . $newname . "/" . $oldfilepath, $newfilepath);
+
                     copy($tmpzipdir . "/" . $newname . "/" . $oldfilepath, $newfilepathsmall);
                     mogrify($newfilepathsmall, $maxsmall, $smallQuality);
+
                     copy($newfilepathsmall, $newfilepaththumb);
                     mogrify($newfilepaththumb, $max, $thumbQuality);
                 }
-
             } else if (preg_match("/\.(png|gif|jpg|jpeg)$/i", $name)) {
                 $imghtml = "<div class='success'>Success</div>";
                 move_uploaded_file($tmp_name, $imgdir . "/" . $newname);
+
                 copy($imgdir . "/" . $newname, $imgdir . "/small_" . $newname);
                 mogrify($imgdir . "/small_" . $newname, $maxsmall, $smallQuality);
+
                 copy($imgdir . "/small_" . $newname, $imgdir . "/thumb_" . $newname);
                 mogrify($imgdir . "/thumb_" . $newname, $max, $thumbQuality);
             }
