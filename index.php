@@ -27,6 +27,9 @@ $maxh = 192;
 // Use lightbox.
 $useLightbox = true;
 
+// Enable full-size image download link.
+$enableFullsizeDownload = false;
+
 // Path to mogrify executable.
 $mogrify = "/usr/bin/mogrify";
 
@@ -163,7 +166,10 @@ if (is_array($imgs) && count($imgs) > 0) {
         $h = $size[1];
         $newh = $maxh;
         $neww = floor(($maxh * $w) / $h);
-        $link = "<span class=\"imgmsg\"><a target=\"_blank\" href=\"{$imgdir}/{$realimg}\">&#x21d3;</a></span>";
+        $link = "";
+        if ($enableFullsizeDownload) {
+            $link = "<span class=\"imgmsg\"><a target=\"_blank\" href=\"{$imgdir}/{$realimg}\">&#x21d3;</a></span>";
+        }
         $imghtml .= "<div class=\"imgcont\"><a target=\"_blank\" href=\"{$imgdir}/small_{$realimg}\"{$lightbox}><img class=\"lazy\" src=\"images/white.png\" data-original=\"{$imgdir}/{$v}\" alt=\"{$imgdir}/{$v}\" width=\"{$neww}\" height=\"{$newh}\" /></a>{$link}</div> ";
     }
 }
